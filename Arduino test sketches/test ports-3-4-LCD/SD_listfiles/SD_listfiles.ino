@@ -1,15 +1,15 @@
 /*
   Listfiles
 
- This example shows how print out the files in a
+ This example shows how print out the filenames in a
  directory on a SD card
 
  The circuit:
  * SD card attached to SPI bus as follows:
- *          Uno        Mega          DUE      ICSP 
- ** MOSI - pin 11  -  pin  51  -   icsp 4  -   4
- ** MISO - pin 12  -  pin  50  -   icsp 1  -   1
- ** CLK  - pin 13  -  pin  52  -   icsp 3  -   3 
+ *          Uno        Mega          DUE          ICSP 
+ ** MOSI - pin 11  -  pin  51  -   icsp 4 (D75) -   4
+ ** MISO - pin 12  -  pin  50  -   icsp 1 (D74) -   1
+ ** CLK  - pin 13  -  pin  52  -   icsp 3 (D76) -   3 
  ** CS   - pin 10  -  pin  53  -   pin 53 (52?)  
  * 
  * ICSP: 
@@ -24,11 +24,12 @@
  by Tom Igoe
  modified 2 Feb 2014
  by Scott Fitzgerald
- modified for RAMPS 1.7 1 sept 2018
+ modified for RAMPS 1.7 on 1 sept 2018
  by MrAlvin 
  
 
  This example code is in the public domain.
+ This code uses hardware SPI.
 
  */
 #include <SPI.h>

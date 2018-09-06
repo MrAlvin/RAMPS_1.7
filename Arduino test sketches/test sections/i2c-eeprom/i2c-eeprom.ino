@@ -1,5 +1,5 @@
 /*
-  Write and read 10 numbers to the 24LC256 EEPROM
+  Write and read 10 numbers to the I2C connected EEPROM
   Example found here: http://arduinolearning.com/learning/basics/interfacing-to-a-24lc256-eeprom.php
   
 */
