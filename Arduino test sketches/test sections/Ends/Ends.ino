@@ -10,7 +10,11 @@
 #define Z_MIN_PIN          18
 #define Z_MAX_PIN          19
 #define Z_PROBE_PIN        64
- 
+
+
+const int DebugLed_pin = 13; 
+
+
 // the setup function runs once when you press reset or power the board
 void setup() {
 
@@ -23,7 +27,10 @@ void setup() {
   pinMode(Z_MAX_PIN, INPUT_PULLUP);  
   pinMode(Z_PROBE_PIN, INPUT_PULLUP); 
 
-  Serial.begin(19200); // Initialize the serial
+  // initialize digital pin 13 (Built-in LED) 
+  pinMode(DebugLed_pin, OUTPUT);
+
+  Serial.begin(115200); // Initialize the serial
   Serial.println( F("Hello World!") );
 
 }
@@ -31,6 +38,7 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   Endstops();
+  EndstopsDebugLED();
 }
 
 void Endstops() { 
@@ -74,4 +82,19 @@ void Endstops10() {
   if( digitalRead(Z_PROBE_PIN) ) Serial.println("0"); else Serial.println("1");
 }
 
+void EndstopsDebugLED() {     
+  bool EndsDebugLedOn = 0;
+  if( !digitalRead(X_MIN_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(X_MAX_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Y_MIN_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Y_MAX_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Z_MIN_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Z_MAX_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Z_PROBE_PIN) ) EndsDebugLedOn = 1;
 
+  if( EndsDebugLedOn ) {
+    digitalWrite(DebugLed_pin, HIGH);   // set the LED on
+  }else{
+    digitalWrite(DebugLed_pin, LOW);   // set the LED ooff
+  }
+}

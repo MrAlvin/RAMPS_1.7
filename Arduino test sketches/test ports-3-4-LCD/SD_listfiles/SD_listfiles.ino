@@ -1,7 +1,7 @@
 /*
   Listfiles
 
- This example shows how print out the filenames in a
+ This example shows how to print out the filenames in a
  directory on a SD card
 
  The circuit:

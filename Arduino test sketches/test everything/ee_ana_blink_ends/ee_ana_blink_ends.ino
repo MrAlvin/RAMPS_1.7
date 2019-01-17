@@ -16,6 +16,8 @@
 #define Z_MAX_PIN          19
 #define Z_PROBE_PIN        64
 
+const int DebugLed_pin = 13; 
+bool PauseEndStopBlink = false;
 
 //***** For Blink n-times of mosfets
 byte _blinks = 3;
@@ -54,7 +56,7 @@ void setup()
   pinMode(Z_PROBE_PIN, INPUT_PULLUP);
 
   // initialize digital pin 13 (Built-in LED) 
-  pinMode(13, OUTPUT);
+  pinMode(DebugLed_pin, OUTPUT);
 
   // initialize mosfet pins 
   pinMode(8, OUTPUT);  //fan2 
@@ -69,7 +71,7 @@ void setup()
   digitalWrite(12, LOW);
 
   
-  Serial.begin(19200); // Initialize the serial
+  Serial.begin(115200); // Initialize the serial
   Serial.println( F("Hello World!") );
 
   test_i2c_eeprom();
@@ -190,8 +192,27 @@ void Endstops() {
     //ready to wait for next show
     endstop_millis = millis();
   }
+  EndstopsDebugLED();
 }
 
+void EndstopsDebugLED() {     
+  bool EndsDebugLedOn = 0;
+  if( !digitalRead(X_MIN_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(X_MAX_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Y_MIN_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Y_MAX_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Z_MIN_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Z_MAX_PIN) ) EndsDebugLedOn = 1;
+  if( !digitalRead(Z_PROBE_PIN) ) EndsDebugLedOn = 1;
+
+  if( !PauseEndStopBlink ) {
+    if( (EndsDebugLedOn == 1)  ) { //endstop LED indication is paused during the three blinks of DebugLED
+      digitalWrite(DebugLed_pin, HIGH);   // set the LED on
+    }else{
+      digitalWrite(DebugLed_pin, LOW);   // set the LED ooff
+    }
+  }
+}
 
 void EndstopsHL() {     
   if( digitalRead(X_MIN_PIN) ) Serial.print("H"); else Serial.print("L");
@@ -298,6 +319,7 @@ void blinkN() {
       case 0:
         blinkN_pin = 9; 
         _blinks = 3;
+		PauseEndStopBlink = false;
         idx++; 
         break;
        case 1:
@@ -323,6 +345,7 @@ void blinkN() {
        case 5:
         blinkN_pin = 13;
         _blinks = 3;
+		PauseEndStopBlink = true;
         idx = 0; 
         break;
     }
