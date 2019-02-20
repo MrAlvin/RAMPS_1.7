@@ -6,12 +6,15 @@
  * 
  * This sketch by MrAlvin, Jan 2019
  * Original sketch and library by Teemu Mäntykallio 
+ *
  * 
  * 
- * Change the TEST_STEPPER value, to test other stepper positions on the RAMPS 1.7 board
+ * Change the TEST_STEPPER value, to test the X,Y,Z,E0,E1 drivers the RAMPS 1.7 board
  */
 
 #define TEST_STEPPER  2  // values can be 1 to 5 where: 1 => X, 2 => Y, 3 => Z, 4 => E0, 5 => E1
+//#define REV_B
+#define REV_C
 
 /** 
  *  You need the latest TMC2130 library from: https://github.com/teemuatlut/TMC2130Stepper
@@ -34,35 +37,70 @@
  */
 
 #if TEST_STEPPER == 2  // Y
-  //         Ramps17-Y    // examples
-  #define EN_PIN    58    // 38  // Nano v3:	16 Mega:	38	//enable (CFG6)
-  #define DIR_PIN   63    // 55  //			19			55	//direction
-  #define STEP_PIN  62    // 54  //			18			54	//step
-  #define CS_PIN    42    // 40  //			17			64	//chip select
+  #ifdef REV_B
+    //         Ramps17-Y  // examples
+    #define EN_PIN    58  // 38  // Nano v3:	16 Mega:	38	//enable (CFG6)
+    #define DIR_PIN   63  // 55  //			19			55	//direction
+    #define STEP_PIN  62  // 54  //			18			54	//step
+    #define CS_PIN    42  // 40  //			17			64	//chip select
+  #else
+    #define EN_PIN    58  
+    #define DIR_PIN   42  
+    #define STEP_PIN  46  
+    #define CS_PIN    63 
+  #endif 
   char Step = 'Y';
 #elif TEST_STEPPER == 1  // X
-  #define EN_PIN    55  
-  #define DIR_PIN   57  
-  #define STEP_PIN  56  
-  #define CS_PIN    46  
+  #ifdef REV_B
+    #define EN_PIN    55  
+    #define DIR_PIN   57  
+    #define STEP_PIN  56  
+    #define CS_PIN    46  
+  #else
+    #define EN_PIN    55  
+    #define DIR_PIN   57  
+    #define STEP_PIN  56  
+    #define CS_PIN    62
+  #endif
   char Step = 'X';
 #elif TEST_STEPPER == 3  // Z
-  #define EN_PIN    67  
-  #define DIR_PIN   69  
-  #define STEP_PIN  68  
-  #define CS_PIN    48
+  #ifdef REV_B
+    #define EN_PIN    67  
+    #define DIR_PIN   69  
+    #define STEP_PIN  68  
+    #define CS_PIN    48
+  #else
+    #define EN_PIN    67  
+    #define DIR_PIN   69  
+    #define STEP_PIN  68  
+    #define CS_PIN    66
+  #endif
   char Step = 'Z';
 #elif TEST_STEPPER == 4  // E0
-  #define EN_PIN    30  
-  #define DIR_PIN   36  
-  #define STEP_PIN  34  
-  #define CS_PIN    38
+  #ifdef REV_B
+    #define EN_PIN    30  
+    #define DIR_PIN   36  
+    #define STEP_PIN  34  
+    #define CS_PIN    38
+  #else
+    #define EN_PIN    30  
+    #define DIR_PIN   36  
+    #define STEP_PIN  34  
+    #define CS_PIN    64
+  #endif
   char Step = '0';
 #elif TEST_STEPPER == 5  // E1 
-  #define EN_PIN    22  
-  #define DIR_PIN   26  
-  #define STEP_PIN  24  
-  #define CS_PIN     6
+  #ifdef REV_B
+    #define EN_PIN    22  
+    #define DIR_PIN   26  
+    #define STEP_PIN  24  
+    #define CS_PIN     6
+  #else
+    #define EN_PIN    22  
+    #define DIR_PIN   26  
+    #define STEP_PIN  24  
+    #define CS_PIN     6
+  #endif
   char Step = '1';
 #endif
 

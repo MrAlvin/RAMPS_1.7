@@ -4,13 +4,22 @@
 
 // For 4988 style stepper boards. 
 
+//#define REV_B
+#define REV_C
+
 #define enaPinX    55
 #define stepPinX   56
 #define directPinX 57
 
-#define enaPinY    58
-#define stepPinY   62
-#define directPinY 63
+#ifdef REV_B
+  #define enaPinY    58
+  #define stepPinY   62
+  #define directPinY 63
+#else
+  #define enaPinY    58
+  #define stepPinY   46
+  #define directPinY 42
+#endif
 
 #define enaPinZ    67
 #define stepPinZ   68

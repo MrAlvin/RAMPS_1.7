@@ -1,8 +1,12 @@
 /*
  * This sketch will test several elements on the RAMPS 1.7 board
  *       Use the Arduino Monitor (or any serial terminal program) to see results and readouts.
- *       
- * The following sections on the RAMPS 1.7 board is being tested:
+ */
+
+// #define REV_B // rev 1.7B
+#define REV_C    // rev 1.7C
+ 
+/* The following sections on the RAMPS 1.7 board is being tested:
  *  - EEPROM   
  *       is read and written to once, during setup()
  *  - Mosfets   
@@ -28,7 +32,11 @@
 #define Y_MAX_PIN          15
 #define Z_MIN_PIN          18
 #define Z_MAX_PIN          19
-#define Z_PROBE_PIN        64
+#ifdef REV_B
+  #define Z_PROBE_PIN      64
+#else
+  #define Z_PROBE_PIN      48
+#endif
 
 const int DebugLed_pin = 13; 
 bool PauseEndStopBlink = false;
@@ -60,25 +68,59 @@ const int analogInPin_3 = A7;  // Analog input pin that the potentiometer is att
 
 //***** For 5 Stepper drivers on RAMPS 1.7
 // For 4988 style stepper boards. 
+
+// X-stepper
 #define enaPinX    55
 #define stepPinX   56
 #define directPinX 57
+#ifdef REV_B
+  #define csPinX   46
+#else
+  #define csPinX   62
+#endif
 
-#define enaPinY    58
-#define stepPinY   62
-#define directPinY 63
+// Y-stepper
+#ifdef REV_B
+  #define enaPinY    58
+  #define stepPinY   62
+  #define directPinY 63
+  #define csPinY     42
+#else
+  #define enaPinY    58
+  #define stepPinY   46
+  #define directPinY 42
+  #define csPinY     63
+#endif
 
+// Z-stepper
 #define enaPinZ    67
 #define stepPinZ   68
 #define directPinZ 69
+#ifdef REV_B
+  #define csPinZ   48
+#else
+  #define csPinZ   66
+#endif
 
+// E0-stepper
 #define enaPinE0    30
 #define stepPinE0   34
 #define directPinE0 36
+#ifdef REV_B
+  #define csPinE0   38
+#else
+  #define csPinE0   64
+#endif
 
+// E1-stepper
 #define enaPinE1    22    
 #define stepPinE1   24
 #define directPinE1 26
+#ifdef REV_B
+  #define csPinE1    6
+#else
+  #define csPinE1    6
+#endif
 
 
 //*****************************************************//

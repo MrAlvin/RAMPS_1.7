@@ -8,14 +8,23 @@
 
 #define STEPPER X  //options are X, Y, Z, E0, E1
 
+//#define REV_B
+#define REV_C
+
 #ifdef STEPPER == X
   #define enaPin    55
   #define stepPin   56
   #define directPin 57
 #elif STEPPER == Y
-  #define enaPin    58
-  #define stepPin   62
-  #define directPin 63
+  #ifdef REV_B
+    #define enaPin    58
+    #define stepPin   62
+    #define directPin 63
+  #else
+    #define enaPin    58
+    #define stepPin   46
+    #define directPin 42
+  #endif
 #elif STEPPER == Z
   #define enaPin    67
   #define stepPin   68
