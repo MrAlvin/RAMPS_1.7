@@ -1,18 +1,17 @@
 /**
  * This sketch will (with default settings) test stepper Y on a RAMPS 1.7 board, 
  * by turning the stepper in alternating directions.
- *
- * You need the latest TMC2130 library from: https://github.com/teemuatlut/TMC2130Stepper
  * 
+ * You need the latest TMC2130 library from: https://github.com/teemuatlut/TMC2130Stepper
+ *  
  * This sketch by MrAlvin, Jan 2019
  * Original sketch and library by Teemu Mäntykallio 
- *
  * 
  * 
  * Change the TEST_STEPPER value, to test the X,Y,Z,E0,E1 drivers the RAMPS 1.7 board
  */
 
-#define TEST_STEPPER  2  // values can be 1 to 5 where: 1 => X, 2 => Y, 3 => Z, 4 => E0, 5 => E1
+#define TEST_STEPPER  1  // values can be 1 to 5 where: 1 => X, 2 => Y, 3 => Z, 4 => E0, 5 => E1
 //#define REV_B
 #define REV_C
 
@@ -95,11 +94,11 @@
     #define DIR_PIN   26  
     #define STEP_PIN  24  
     #define CS_PIN     6
-  #else
+  #else // REV_C
     #define EN_PIN    22  
     #define DIR_PIN   26  
     #define STEP_PIN  24  
-    #define CS_PIN     6
+    #define CS_PIN    70  // 6 or 70
   #endif
   char Step = '1';
 #endif
@@ -121,7 +120,7 @@ void setup() {
 	SPI.begin();
 	pinMode(MISO, INPUT_PULLUP);
 	driver.begin(); 			// Initiate pins and registeries
-	driver.rms_current(300); 	// Set stepper current to 600mA. The command is the same as command TMC2130.setCurrent(600, 0.11, 0.5);
+	driver.rms_current(300); 	// Set stepper current to 300mA. The command is the same as command TMC2130.setCurrent(600, 0.11, 0.5);
 	driver.stealthChop(1); 	// Enable extremely quiet stepping
 	
 	digitalWrite(EN_PIN, LOW);

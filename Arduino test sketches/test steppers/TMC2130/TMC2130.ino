@@ -3,7 +3,7 @@
   
   This file originally found: https://github.com/watterott/SilentStepStick/tree/master/software
   
-  Other examples/libraries can be found here:
+  Other examples that uses libraries can be found here:
   https://github.com/teemuatlut/TMC2130Stepper
   https://github.com/makertum/Trinamic_TMC2130
   
@@ -170,4 +170,3 @@ void loop()
   digitalWrite(STEP_PIN, LOW);
   delayMicroseconds(10);
 }
-
